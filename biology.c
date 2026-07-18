@@ -4,9 +4,8 @@
 #include <stdbool.h>
 #include <stdarg.h>
 
-// ============================================================
+
 // DATA STRUCTURES
-// ============================================================
 
 typedef enum { A=0, T=1, U=2, G=3, C=4 } Nucleotide;
 typedef enum { mRNA_TYPE, tRNA_TYPE, rRNA_TYPE } RNA_Type;
@@ -58,9 +57,8 @@ typedef struct {
 
 Logger *LOG = NULL;
 
-// ============================================================
+
 // LOGGER (replaces printf)
-// ============================================================
 
 Logger* create_logger() {
     Logger *l = (Logger*)malloc(sizeof(Logger));
@@ -97,9 +95,8 @@ void free_logger(Logger *l) {
     free(l->logs); free(l);
 }
 
-// ============================================================
+
 // HELPERS
-// ============================================================
 
 char nuc_to_char(Nucleotide n) {
     switch(n) {
@@ -158,9 +155,8 @@ void log_rna(Logger *l, RNAStrand *r, const char *label) {
     log_msg(l, buf);
 }
 
-// ============================================================
+
 // DNA REPLICATION
-// ============================================================
 
 DNAStrand* dna_replicate(DNAStrand *template_strand, bool create_complement) {
     DNAStrand *new = (DNAStrand*)malloc(sizeof(DNAStrand));
@@ -184,9 +180,8 @@ ReplicationFork* replicate_dna_full(DNAStrand *parent) {
     return f;
 }
 
-// ============================================================
+
 // TRANSCRIPTION
-// ============================================================
 
 RNAStrand* transcribe_mRNA(DNAStrand *template_dna, int start, int end) {
     if (end == -1) end = template_dna->length;
@@ -239,9 +234,8 @@ RNAStrand* transcribe_rRNA(DNAStrand *d, int s, int e) {
     return r;
 }
 
-// ============================================================
+
 // GENETIC CODE
-// ============================================================
 
 CodonEntry genetic_code[] = {
     {"AUG","Met",0},{"UAA","Stop",1},{"UAG","Stop",1},{"UGA","Stop",1},
@@ -287,9 +281,8 @@ char* get_anticodon(const char *codon) {
     return anti;
 }
 
-// ============================================================
+
 // RIBOSOME & TRANSLATION
-// ============================================================
 
 Ribosome* create_ribosome(RNAStrand *large, RNAStrand *small) {
     Ribosome *r = (Ribosome*)malloc(sizeof(Ribosome));
@@ -384,9 +377,8 @@ Protein* translate_mRNA(RNAStrand *mrna, Ribosome *ribosome) {
     return protein;
 }
 
-// ============================================================
+
 // CENTRAL DOGMA
-// ============================================================
 
 void central_dogma_simulation(DNAStrand *gene) {
     log_msg(LOG, "\n╔════════════════════════════════════════╗");
@@ -438,9 +430,8 @@ void central_dogma_simulation(DNAStrand *gene) {
     free(protein->sequence); free(protein);
 }
 
-// ============================================================
+
 // MAIN
-// ============================================================
 
 int main() {
     LOG = create_logger();
