@@ -56,7 +56,7 @@ static inline QuarkID quark_color_swap(QuarkID q, Color c) { return (q & ~(0x7<<
 
 typedef struct { QuarkID q[3]; } Baryon;  /* proton = uud, neutron = udd */
 
-static inline bool baryon_is_colorless(Baryon b) {
+static extern bool baryon_is_colorless(Baryon b) {
     return (Q_COLOR(b.q[0]) != Q_COLOR(b.q[1])) && 
            (Q_COLOR(b.q[1]) != Q_COLOR(b.q[2])) && 
            (Q_COLOR(b.q[0]) != Q_COLOR(b.q[2]));
@@ -64,6 +64,7 @@ static inline bool baryon_is_colorless(Baryon b) {
 
 /*--- 6. PRINT TABLE (12 types, zero branching) ---*/
 #include <stdio.h>
+
 int main(void) {
     static const QuarkID list[12] = {
         QUARK_UP_RED, QUARK_UP_GREEN, QUARK_UP_BLUE,
